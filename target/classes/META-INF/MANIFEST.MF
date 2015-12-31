@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1451552764607
+Build-Jdk: 1.7.0_60
+Built-By: waynetoh
+Bundle-ManifestVersion: 2
+Bundle-Name: Camel Blueprint Route
+Bundle-SymbolicName: surbanasap
+Bundle-Version: 0.0.1.SNAPSHOT
+Created-By: Apache Maven Bundle Plugin
+Export-Package: com.redhat.fusesap;uses:="org.fusesource.camel.component
+ .sap.model.rfc,org.fusesource.camel.component.sap,org.apache.camel,java
+ x.ws.rs";version="0.0.1.SNAPSHOT"
+Import-Package: javax.ws.rs;version="[2.0,3)",org.apache.camel;version="
+ [2.15,3)",org.fusesource.camel.component.sap;version="[6.2,7)",org.fuse
+ source.camel.component.sap.model.rfc;version="[6.2,7)",org.fusesource.c
+ amel.component.sap.model.rfc.impl;version="[6.2,7)",org.osgi.service.bl
+ ueprint;version="[1.0.0,2.0.0)"
+Tool: Bnd-1.50.0

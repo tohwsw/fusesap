@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BAPI_FLBOOKING_GETLIST:Request xmlns:BAPI_FLBOOKING_GETLIST="http://sap.fusesource.org/rfc/NSP/BAPI_FLBOOKING_GETLIST" AIRLINE="AA" CUSTOMER_NUMBER="00000352" MAX_ROWS="1" />

@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: com.redhat.surbanasap.RouteTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 2.503 sec <<< FAILURE! - in com.redhat.surbanasap.RouteTest
+testRoute(com.redhat.surbanasap.RouteTest)  Time elapsed: 2.452 sec  <<< ERROR!
+java.lang.RuntimeException: InputStream cannot be null
+Caused by: java.lang.IllegalArgumentException: InputStream cannot be null
+

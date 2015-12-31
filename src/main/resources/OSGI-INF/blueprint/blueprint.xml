@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camel="http://camel.apache.org/schema/blueprint"
+    xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.0.0"
+    xmlns:jaxws="http://cxf.apache.org/blueprint/jaxws"
+    xmlns:jaxrs="http://cxf.apache.org/blueprint/jaxrs"
+	xmlns:cxf="http://cxf.apache.org/blueprint/core" 
+	xmlns:camelcxf="http://camel.apache.org/schema/blueprint/cxf"
+    xsi:schemaLocation="
+       http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
+       http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd
+       http://cxf.apache.org/blueprint/jaxws http://cxf.apache.org/schemas/blueprint/jaxws.xsd
+       http://cxf.apache.org/blueprint/jaxrs http://cxf.apache.org/schemas/blueprint/jaxrs.xsd
+       http://cxf.apache.org/blueprint/core http://cxf.apache.org/schemas/blueprint/core.xsd
+       http://camel.apache.org/schema/blueprint/cxf http://camel.apache.org/schema/blueprint/cxf/camel-cxf.xsd">
+       
+  
+  <camelcxf:rsServer id="rsServer" address="http://0.0.0.0:9000/flightservice" serviceClass="com.redhat.fusesap.RestFlight" loggingFeatureEnabled="false" />
+ 
+  <bean id="flightBean" class="com.redhat.fusesap.FlightBean"/>
+  
+  <bean id="sap-configuration" class="org.fusesource.camel.component.sap.SapConnectionConfiguration">
+        <property name="destinationDataStore">
+            <map>
+                <entry key="sapvm">
+                    <bean class="org.fusesource.camel.component.sap.model.rfc.impl.DestinationDataImpl">
+                        <property name="ashost" value="saphost"/>
+                        <property name="authType" value="CONFIGURED_USER"/>
+                        <property name="client" value="000"/>
+                        <property name="denyInitialPassword" value="0"/>
+                        <property name="gwhost" value="saphost"/>
+                        <property name="gwserv" value="3300"/>
+                        <property name="lang" value="en"/>
+                        <property name="passwd" value="P@ssw0rd"/>
+                        <property name="password" value="P@ssw0rd"/>
+                        <property name="pingOnCreate" value="false"/>
+                        <property name="poolCapacity" value="1"/>
+                        <property name="r3name" value="QUICKSTART"/>
+                        <property name="sysnr" value="00"/>
+                        <property name="userName" value="BTS"/>
+                        <property name="user" value="BTS"/>
+                    </bean>
+                </entry>
+            </map>
+        </property>
+        <property name="serverDataStore">
+            <map/>
+        </property>
+    </bean>
+
+  <camelContext xmlns="http://camel.apache.org/schema/blueprint">
+  <dataFormats>
+    <json id="flightCustFormat" library="Jackson" unmarshalTypeName="com.redhat.fusesap.FlightCustomerInfo"/>
+  </dataFormats>
+  
+  <route id="resttosap">
+    <from uri="cxfrs:bean:rsServer?bindingStyle=SimpleConsumer"/>
+    <!-- Convert JSON to POJO -->
+    <unmarshal ref="flightCustFormat"/>
+    <to uri="log:myLog?showAll=true&amp;multiline=true"/>
+    <to uri="bean:flightBean?method=createRequest"/>
+    <to uri="sap-srfc-destination:sapvm:BAPI_FLCUST_GETLIST"/>
+    <to uri="bean:flightBean?method=checkFlightCustomerInfo"/>
+    <to uri="log:myLog?showAll=true&amp;multiline=true"/>
+    <!-- Convert XML to JSON -->
+    <marshal ref="flightCustFormat"/>
+    <to uri="bean:flightBean?method=mapOutput"/>
+  </route>
+</camelContext>
+
+</blueprint>
