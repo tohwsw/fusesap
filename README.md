@@ -5,6 +5,7 @@ This example shows how JBoss Fuse uses the SAP Java Connector (SAP JCo) library 
 # Pre-requisites
 
 1) There should be an existing SAP server for connection
+
 2) Install the SAP Tool Suite in the JBoss Developer Studio. This creates a SAP Connections view for testing your components.
 
 https://access.redhat.com/documentation/en-US/Red_Hat_JBoss_Fuse/6.2/html/Tooling_User_Guide/RiderSAP.html
