@@ -2,7 +2,7 @@
 
 This example shows how JBoss Fuse uses the SAP Java Connector (SAP JCo) library to facilitate bidirectional communication with SAP. Fuse will expose the SAP data via a REST invocation.
 
-[![Launch on OpenShift](https://launch-shifter.rhcloud.com/launch.svg)]
+(https://github.com/tohwsw/fusesap/blob/master/fusesap.png)
 
 # Pre-requisites
 
